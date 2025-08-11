@@ -5,13 +5,14 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
+        "distDir": "dist",
+        "installCommand": "npm install --legacy-peer-deps",
+        "buildCommand": "chmod +x node_modules/.bin/vite && npm run build"
       }
     }
   ],
   "routes": [
     { "handle": "filesystem" },
     { "src": "/.*", "dest": "/index.html" }
-  ],
-  "buildCommand": "npm install && npm run build"
+  ]
 }
