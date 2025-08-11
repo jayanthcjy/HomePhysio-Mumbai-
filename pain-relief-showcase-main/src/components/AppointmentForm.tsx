@@ -5,14 +5,28 @@ import { useState } from "react";
 const AppointmentForm = () => {
   const [formData, setFormData] = useState({
     name: "",
-    phone: "",
+    problem: "",
     date: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
+    
+    // Create WhatsApp message with form data
+    const message = `*New Appointment Request*%0A%0A` +
+                   `*Name:* ${formData.name}%0A` +
+                   `*Problem:* ${formData.problem}%0A` +
+                   `*Preferred Date:* ${formData.date || 'Not specified'}`;
+    
+    // Open WhatsApp with pre-filled message
+    window.open(`https://wa.me/919901360073?text=${message}`, '_blank');
+    
+    // Reset form
+    setFormData({
+      name: "",
+      problem: "",
+      date: ""
+    });
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -49,18 +63,17 @@ const AppointmentForm = () => {
                 />
               </div>
 
-              <div className="space-y-2">
-                <label htmlFor="phone" className="text-sm font-medium text-foreground">
-                  Phone Number *
+              <div className="space-y-2 md:col-span-2">
+                <label htmlFor="problem" className="text-sm font-medium text-foreground">
+                  Tell Us About Your Problem *
                 </label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  placeholder="Enter your phone number"
-                  value={formData.phone}
-                  onChange={(e) => handleInputChange("phone", e.target.value)}
+                <textarea
+                  id="problem"
+                  placeholder="Describe your condition or problem in detail"
+                  value={formData.problem}
+                  onChange={(e) => handleInputChange("problem", e.target.value)}
                   required
-                  className="h-12"
+                  className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[100px]"
                 />
               </div>
 
@@ -80,8 +93,8 @@ const AppointmentForm = () => {
             </div>
 
             <div className="text-center">
-              <Button type="submit" variant="accent" size="lg" className="px-12 py-6 text-lg">
-                Get Started
+              <Button type="submit" variant="accent" size="lg" className="px-12 py-6 text-lg w-full sm:w-auto">
+                Appointment by WhatsApp
               </Button>
             </div>
           </form>

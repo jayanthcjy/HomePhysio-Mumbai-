@@ -1,65 +1,79 @@
-import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, MessageCircle } from "lucide-react";
 import clinicLogo from "@/assets/clinic-logo.png";
+import { PHONE_CONFIG, handlePhoneClick } from "@/lib/phoneUtils";
 
 const Footer = () => {
+  const { primaryNumber, telLink, whatsappLink } = PHONE_CONFIG;
+  const EMAIL = 'dr.dwayne.physio@gmail.com';
+  
   const quickLinks = [
     { name: "Home", href: "#home" },
-    { name: "About Us", href: "#about" },
     { name: "Services", href: "#services" },
-    { name: "Blog", href: "#blog" },
-    { name: "Contact", href: "#contact" },
-    { name: "Appointment", href: "#appointment" },
+    { name: "About", href: "#about" },
+    { name: "Reviews", href: "#testimonials" },
   ];
 
   const services = [
-    "Neck Pain Treatment",
-    "Back Pain Relief",
-    "Sports Injury Recovery",
-    "Post-Surgery Rehabilitation",
-    "Manual Therapy",
-    "Exercise Therapy",
+    "Home Rehab",
+    "Elderly Care",
+    "Sports Injuries",
+    "Post-Surgery Care",
+    "Pain Relief",
+    "Mobility Training",
   ];
 
   return (
-    <footer id="contact" className="bg-foreground text-background">
+    <footer id="contact" className="bg-foreground text-background text-sm">
       <div className="container mx-auto px-4">
         {/* Main Footer Content */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 py-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-10">
           {/* Logo and Contact Info */}
-          <div className="space-y-6">
-            <img src={clinicLogo} alt="Physio Clinic" className="h-12 w-auto" />
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <Mail className="h-5 w-5 text-accent" />
-                <a href="mailto:info@physioclinic.com" className="hover:text-accent transition-colors">
-                  info@physioclinic.com
-                </a>
+          <div className="col-span-2 space-y-4">
+            <div>
+              <h2 className="text-xl font-bold">Dr. Dwayne</h2>
+              <p className="text-accent">Home Physio • Malad</p>
+            </div>
+            <div className="space-y-3">
+              <a 
+                href={telLink}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handlePhoneClick(primaryNumber);
+                }}
+                className="flex items-center gap-2 hover:text-accent transition-colors cursor-pointer"
+                aria-label="Call Dr. Dwayne"
+                title={`Call ${primaryNumber}`}
+              >
+                <Phone className="h-4 w-4 text-accent flex-shrink-0" />
+                <span>Call {primaryNumber}</span>
+              </a>
+              <div className="flex items-start gap-2">
+                <MapPin className="h-4 w-4 text-accent mt-0.5 flex-shrink-0" />
+                <span>Malad West, Mumbai</span>
               </div>
-              <div className="flex items-center gap-3">
-                <Phone className="h-5 w-5 text-accent" />
-                <a href="tel:+919876543210" className="hover:text-accent transition-colors">
-                  +91 98765 43210
-                </a>
-              </div>
-              <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-accent mt-0.5" />
-                <div>
-                  <p>123 Health Street, Mulund East</p>
-                  <p>Mumbai, Maharashtra 400081</p>
-                </div>
-              </div>
+              <a 
+                href={whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-accent text-background rounded-lg hover:bg-accent/90 transition-colors text-sm"
+                aria-label="Chat on WhatsApp"
+                title="Chat with us on WhatsApp"
+              >
+                <MessageCircle className="h-4 w-4" />
+                <span>WhatsApp Us</span>
+              </a>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-6">Quick Links</h3>
-            <ul className="space-y-3">
+            <h3 className="font-semibold mb-3">Quick Links</h3>
+            <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <a 
                     href={link.href} 
-                    className="hover:text-accent transition-colors text-background/80 hover:text-accent"
+                    className="text-background/80 hover:text-accent transition-colors text-sm"
                   >
                     {link.name}
                   </a>
@@ -70,62 +84,76 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h3 className="text-lg font-semibold mb-6">Our Services</h3>
-            <ul className="space-y-3">
+            <h3 className="font-semibold mb-3">Services</h3>
+            <ul className="space-y-2">
               {services.map((service) => (
-                <li key={service}>
-                  <span className="text-background/80">{service}</span>
+                <li key={service} className="text-background/80 text-sm">
+                  {service}
                 </li>
               ))}
             </ul>
           </div>
 
           {/* Office Hours */}
-          <div>
-            <h3 className="text-lg font-semibold mb-6">Office Hours</h3>
-            <div className="space-y-4">
-              <div className="flex items-center gap-3 mb-4">
-                <Clock className="h-5 w-5 text-accent" />
-                <span className="font-medium">Working Hours</span>
+          <div className="col-span-2 md:col-span-1">
+            <h3 className="font-semibold mb-3">Hours</h3>
+            <div className="space-y-2 text-background/80 text-sm">
+              <div className="flex justify-between">
+                <span>Mon-Fri</span>
+                <span>9AM - 8PM</span>
               </div>
-              <div className="space-y-2 text-background/80">
-                <div className="flex justify-between">
-                  <span>Monday - Friday</span>
-                  <span>9:00 AM - 8:00 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Saturday</span>
-                  <span>9:00 AM - 6:00 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Sunday</span>
-                  <span>10:00 AM - 4:00 PM</span>
-                </div>
+              <div className="flex justify-between">
+                <span>Sat</span>
+                <span>9AM - 6PM</span>
               </div>
-              <div className="mt-4 p-3 bg-accent/10 rounded-lg">
-                <p className="text-sm text-accent font-medium">
-                  Emergency consultations available 24/7
-                </p>
+              <div className="flex justify-between">
+                <span>Sun</span>
+                <span>10AM - 4PM</span>
+              </div>
+              <div className="mt-3 p-2 bg-accent/10 rounded text-xs">
+                Emergency: 24/7 Available
               </div>
             </div>
           </div>
         </div>
 
         {/* Bottom Footer */}
-        <div className="border-t border-background/20 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-background/60 text-sm">
-              © 2024 Physio Clinic Mumbai. All rights reserved.
+        <div className="border-t border-background/20 py-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-3">
+            <p className="text-background/60 text-xs">
+              &copy; {new Date().getFullYear()} Dr. Dwayne - Home Physio Mumbai
             </p>
-            <div className="flex gap-6 text-sm">
-              <a href="#" className="text-background/60 hover:text-accent transition-colors">
-                Privacy Policy
+            <div className="flex flex-wrap justify-center gap-3 text-xs">
+              <a 
+                href={whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-background/80 hover:text-accent transition-colors flex items-center gap-1"
+                aria-label="Chat on WhatsApp"
+                title="Chat with us on WhatsApp"
+              >
+                <MessageCircle className="h-3 w-3" />
+                <span>WhatsApp</span>
               </a>
-              <a href="#" className="text-background/60 hover:text-accent transition-colors">
-                Terms of Service
+              <a 
+                href={telLink}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handlePhoneClick(primaryNumber);
+                }}
+                className="text-background/80 hover:text-accent transition-colors flex items-center gap-1 cursor-pointer"
+                aria-label="Call Dr. Dwayne"
+                title={`Call ${primaryNumber}`}
+              >
+                <Phone className="h-3 w-3" />
+                <span>Call</span>
               </a>
-              <a href="#" className="text-background/60 hover:text-accent transition-colors">
-                Cookie Policy
+              <a 
+                href={`mailto:${EMAIL}`}
+                className="text-background/80 hover:text-accent transition-colors flex items-center gap-1"
+              >
+                <Mail className="h-3 w-3" />
+                <span>Email</span>
               </a>
             </div>
           </div>
